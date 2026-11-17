@@ -1,0 +1,57 @@
+
+#include <stdio.h>
+
+int graf[5][5] = {
+    {0, 1, 0, 1, 0},
+    {1, 0, 1, 0, 1},
+    {0, 1, 0, 0, 0},
+    {1, 0, 0, 0, 1},
+    {0, 1, 0, 1, 0}
+};
+
+char sehirler[5] = {'A', 'B', 'C', 'D', 'E'};
+int ziyaret[5] = {0};
+
+void BFS(int baslangic) {
+    int kuyruk[5];
+    int bas = 0, son = 0;
+
+    kuyruk[son++] = baslangic;
+    ziyaret[baslangic] = 1;
+
+    while (bas < son) {
+        int mevcut = kuyruk[bas++];
+        printf("%c ", sehirler[mevcut]);
+
+        for (int i = 0; i < 5; i++) {
+            if (graf[mevcut][i] == 1 && ziyaret[i] == 0) {
+                ziyaret[i] = 1;
+                kuyruk[son++] = i;
+            }
+        }
+    }
+}
+
+void DFS(int mevcut) {
+    ziyaret[mevcut] = 1;
+    printf("%c ", sehirler[mevcut]);
+
+    for (int i = 0; i < 5; i++) {
+        if (graf[mevcut][i] == 1 && ziyaret[i] == 0) {
+            DFS(i);
+        }
+    }
+}
+
+int main() {
+    printf("BFS: ");
+    BFS(0);
+
+    for (int i = 0; i < 5; i++)
+        ziyaret[i] = 0;
+
+    printf("\nDFS: ");
+    DFS(0);
+
+    return 0;
+}
